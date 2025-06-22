@@ -35,8 +35,38 @@ To begin, you'll need a **GitHub repository** to store your configuration and AP
 
 * **Create a GitHub account**: If you're new to GitHub, start by [creating an account](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github).
 * **Create new repositories**: You'll need to [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) to host your files.
-* **Create a GitHub App** to authenticate connexion from Integration Connexion: You'll also need to [create a GitHub App](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps). 
+* **Create a GitHub App** to authenticate connexion from Integration Connexion. See Github documentation [create a GitHub App](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps). 
 
-  Keep in mind that the **Client ID** and **Client Secret** generated during this process are crucial for setting up your GitHub Integration Connection. You'll also need the **Callback URL** from your Integration Connection to finalize the GitHub App creation. For more details, refer to the [GitHub Integration Connection documentation](https://cloud.google.com/integration-connectors/docs/connectors/github/configure#configure-the-connector).
+> ℹ️ One Github App. can allow access to one or many repositories : you can configure it in Github App. permissions.
+
+> ℹ️ the **Client ID** and **Client Secret** generated during this process are crucial for setting up your GitHub Integration Connection. You'll also need the **Callback URL** from your Integration Connection to finalize the GitHub App creation. For more details, refer to the [GitHub Integration Connection documentation](https://cloud.google.com/integration-connectors/docs/connectors/github/configure#configure-the-connector).
 
 ## Integration Connexion Setup
+
+Application Integration leverages a **GitHub Integration Connection** to retrieve files from your GitHub repository. Therefore, your initial step is to create this connection by following the instructions provided in the [Configure the GitHub connector documentation](https://cloud.google.com/integration-connectors/docs/connectors/github/configure). Please also refer to the preceding note regarding GitHub App parameters (credentials and call back URL).
+
+## Application Integration Setup
+
+To upload, do the following steps:
+
+1) Clone the repo 
+```sh
+https://github.com/g-lalevee/apihub-curation-github.git
+```
+2) In the Google Cloud console, go to the [Application Integration](https://console.cloud.google.com/integrations) page
+4) In the navigation menu, click Integrations. The Integrations List page appears.
+5) Select an existing integration or create a new integration by clicking Create integration.
+If you are creating a new integration:
+    - Enter a name `apiHubCurationGithub-v1` and description in the Create Integration dialog.
+    - Select a Region for the integration from the list of supported regions.
+    - Click Create.
+    
+    This opens the integration in the integration designer.
+6) In the integration designer, click `Upload/download menu` and then select `Upload integration`.
+7) In the file browser dialog, select `apiHubCurationGithub-v1.json`, and then click Open. A new version of the integration is created using the uploaded file.
+8) In the variable panel, update default values for config variables
+    - `CONFIG_githubConnectionName`: the name of the Integration Connection created during step **Application Integration Setup**.
+    - `CONFIG_githubRepoName`: the name of the Github repository used to store API specification files and configuration files.
+    - `CONFIG_githubRepoOwnerName`: the name of the Github owner name of the repository.
+9) In the integration designer, click Deploy.
+10) Click Test integration. This runs the integration and displays the execution result in the Test Integration dialog.
