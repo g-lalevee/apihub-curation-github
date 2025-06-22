@@ -166,7 +166,7 @@ You can perform a quick unit test directly within Application Integration:
 
 #### **apiData** input value
 
-``` JSON
+``` 
 {
    "apiMetadataList":{
       "apiMetadata":[
@@ -239,7 +239,7 @@ You can perform a quick unit test directly within Application Integration:
 
 
 #### **apiData** OUTPUT value
-``` JSON
+``` 
 {
    "apiMetadataList":{
       "apiMetadata":[
