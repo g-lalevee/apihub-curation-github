@@ -15,11 +15,13 @@ API Hub Curation involves transforming and enriching API metadata that has been 
 The curation logic implemented here performs the following steps for each ingested API:
 
 * **Checks for API Specification File:** It verifies if an API specification file is available in the GitHub repository.
-    * If **not available**, the API is ingested without any additional enrichment.
-    * If **available**, it extracts:
+    * If file **not available**, the API is ingested without any additional enrichment.
+    * If file **available**, it extracts:
         * **API Version Metadata** from the API specification file.
-        * **API Metadata** from an API configuration file.
+        * **API Metadata** from an API configuration file, using OpenAPI extensions.
 * **API Renaming:** The API's name is standardized by removing any versioning information (if present) to consolidate all versions under a single, consistent name.
+
+> API Metadata and API Version Metadata are API hub System Attributes
 
 ![integration process](./images/integration.png)
 
@@ -135,6 +137,8 @@ Here's a breakdown of the attributes and their corresponding values:
 
     x-lifecycle: develop
     ```
+
+See [OpenAPI Extensions](https://swagger.io/docs/specification/v3_0/openapi-extensions/) "x-" on the root level of the API spec and in info section.
 
 You'll need to configure the following **API Hub system attributes** with their corresponding IDs and values:
 
