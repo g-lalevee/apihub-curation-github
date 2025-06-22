@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: Contextual Analyzis API
+  description: API to analyze text from input JSON data.
+  version: 1.0.0
+  contact:
+    name: Apigee Devrel
+    url: https://github.com/apigee/devrel
+    
+  x-data-classification: publicaopenadata
+
+x-lifecycle: develop
+
+servers:
+  -  url: https://34-149-164-96.nip.io/v1/audience
+     description: Default Development Env
+
+security:
+- ApiKeyAuth: []
+
+tags:
+  - name: analyze
+    description: Everything about contextual analysis
+  
+paths:
+  /analyze:
+    post:
+      description: Analyze text with input JSON data.
+      operationId: analyze
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextAnalysisRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextAnalysisResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notfound'
+          description: Bad Request
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notfound'
+          description: Internal Server Error
+      summary: Analyze text with input JSON data.
+      tags:
+        - analyze
+components:
+  schemas:
+    TextAnalysisRequest:
+      description: Request to analyze text with input JSON data.
+      properties:
+        channelId:
+          description: Channel ID.
+          type: string
+          example: "757557ba-c29b-4731-8c20-fd182045ae03"
+        contents:
+          description: Array of text contents to analyze.
+          items:
+            $ref: '#/components/schemas/TextContent'
+          type: array
+          example: 
+            [ 
+              { 
+                "text": "George Habitbol is the classiest man in the world", 
+                "publishedAt": "2024-01-01T01:50:27.256Z" 
+              } 
+            ]
+      example:   
+          {  
+            "channelId": "757557ba-c29b-4731-8c20-fd182045ae03",  
+            "contents": [  
+              {   
+                "text": "Einstein is an asshole",   
+                "publishedAt": "2022-10-01T01:50:27.256Z" 
+              }, 
+              {  
+                "text": "Good job !", 
+                "publishedAt": "2022-09-23T03:21:56.332Z"  
+              } 
+            ]  
+          }
+     
+      required:
+        - channelId
+        - contents
+        
+    TextAnalysisResponse:
+      description: Response object for text analysis.
+      properties:
+        data:
+          description: Array of text analysis results.
+          items:
+            $ref: '#/components/schemas/TextAnalysisResult'
+          type: array
+      type: object
+      
+      
+    TextAnalysisResult:
+      description: Text analysis result.
+      properties:
+        analyzedAt:
+          description: Analysis timestamp.
+          format: date-time
+          type: string
+        language:
+          description: Language of the text.
+          type: string
+        meta:
+          description: Analysis meta data.
+          type: object
+        publishedAt:
+          description: Text published timestamp.
+          format: date-time
+          type: string
+        recommendedAction:
+          description: Recommended action.
+          type: string
+        reference:
+          description: Reference ID.
+          type: string
+        severity:
+          description: Analysis severity.
+          type: string
+        text:
+          description: Analyzed text.
+          type: string
+        type:
+          description: Analysis type.
+          type: string
+      type: object
+      example:
+        {
+          "data":[
+                    {
+                      "text": "George Habitbol is the classiest man in the world",
+                      "reference": "bodyguard/6862d0ed-684f-4a6a-8c78-2862dbce3f03",
+                      "type": "NEUTRAL",
+                      "severity": "NONE",
+                      "meta":{
+                              "classifications":["NEUTRAL"],
+                              "directedAt": "NONE"
+                             },
+                      "language": "en",
+                      "analyzedAt": "2024-06-10T22:04:08.497Z",
+                      "publishedAt": "2022-10-01T01:50:27.256Z",
+                      "recommendedAction": "KEEP"
+                    }
+                ]
+        }
+      
+    TextContent:
+      description: Text content to analyze.
+      properties:
+        publishedAt:
+          description: Text published timestamp.
+          format: date-time
+          type: string
+        text:
+          description: Text to analyze.
+          type: string
+      type: object
+      
+      
+    notfound:
+      properties:
+        errror:
+          description: rank number in list
+          properties:
+            code:
+              example: 404
+              type: integer
+            errors:
+              items:
+                properties:
+                  message:
+                    example: Not Found
+                    type: string
+                type: object
+              type: array
+            message:
+              example: Not Found
+              type: string
+          type: object
+      title: Not Found error
+      type: object
+      
+      
+      
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-Api-Key
+      in: header

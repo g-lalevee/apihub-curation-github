@@ -1,0 +1,881 @@
+{
+  "name": "projects/1020259423319/locations/europe-west1/integrations/apiHubCurationGithub-v1/versions/5fc4f0b0-f5b1-4726-b9c6-0d1725bcd369",
+  "description": "API hub curation process using Github metadata.",
+  "updateTime": "2025-06-22T21:41:55.647Z",
+  "createTime": "2025-06-22T21:41:40.292Z",
+  "lastModifierEmail": "lalevee@google.com",
+  "triggerConfigs": [{
+    "label": "API Trigger",
+    "startTasks": [{
+      "taskId": "4"
+    }],
+    "properties": {
+      "Trigger name": "curation"
+    },
+    "triggerType": "API",
+    "triggerNumber": "1",
+    "triggerId": "api_trigger/curation",
+    "position": {
+      "x": 140,
+      "y": 45
+    },
+    "inputVariables": {
+      "names": ["apiMetadata", "apiData"]
+    },
+    "outputVariables": {
+      "names": ["responsePayload", "curatedAPIMetadata", "apiData"]
+    }
+  }, {
+    "label": "Enrich each API with spec",
+    "startTasks": [{
+      "taskId": "6"
+    }],
+    "properties": {
+      "Trigger name": "apiHubCurationGithub_v1_Private"
+    },
+    "triggerType": "PRIVATE_TRIGGER",
+    "triggerNumber": "2",
+    "triggerId": "private_trigger/apiHubCurationGithub_v1_Private",
+    "position": {
+      "x": 620,
+      "y": 45
+    }
+  }],
+  "taskConfigs": [{
+    "task": "GenericConnectorTask",
+    "taskId": "10",
+    "parameters": {
+      "filterClause": {
+        "key": "filterClause",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "entityType": {
+        "key": "entityType",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "executeQueryRequestConfig": {
+        "key": "executeQueryRequestConfig"
+      },
+      "authOverrideEnabled": {
+        "key": "authOverrideEnabled",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "entityId": {
+        "key": "entityId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "enableDynamicConnection": {
+        "key": "enableDynamicConnection",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "serviceName": {
+        "key": "serviceName",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "connectorOutputPayload": {
+        "key": "connectorOutputPayload",
+        "value": {
+          "stringValue": "$`Task_10_connectorOutputPayload`$"
+        }
+      },
+      "timeout": {
+        "key": "timeout",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "listEntitiesSortByColumns": {
+        "key": "listEntitiesSortByColumns",
+        "value": {
+          "stringArray": {
+          }
+        }
+      },
+      "listEntitiesPageToken": {
+        "key": "listEntitiesPageToken",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "connectorInputPayload": {
+        "key": "connectorInputPayload",
+        "value": {
+          "stringValue": "$`Task_10_connectorInputPayload`$"
+        }
+      },
+      "listEntitiesPageSize": {
+        "key": "listEntitiesPageSize",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "host": {
+        "key": "host",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "useHttpHeaderForDynamicAuthConfig": {
+        "key": "useHttpHeaderForDynamicAuthConfig"
+      },
+      "connectionName": {
+        "key": "connectionName",
+        "value": {
+          "stringValue": "$`CONFIG_githubConnectionName`$"
+        }
+      },
+      "operation": {
+        "key": "operation",
+        "value": {
+          "stringValue": "EXECUTE_ACTION"
+        }
+      },
+      "config": {
+        "key": "config"
+      },
+      "connectionVersion": {
+        "key": "connectionVersion",
+        "value": {
+          "stringValue": "projects/bap-emea-apigee-5/locations/global/providers/github/connectors/github/versions/1"
+        }
+      },
+      "actionName": {
+        "key": "actionName",
+        "value": {
+          "stringValue": "DownloadFile"
+        }
+      },
+      "dynamicAuthConfig": {
+        "key": "dynamicAuthConfig",
+        "value": {
+          "jsonValue": "null"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "11"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Fetch config file from Github",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 408,
+      "y": 1133
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "11",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"BOOLEAN_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_10_connectorOutputPayload`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_ELEMENT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"intValue\": \"0\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"Success\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"TO_BOOLEAN\"\n            }\n          }\n        }, {\n          \"functionType\": {\n            \"booleanFunction\": {\n              \"functionName\": \"NOT\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$notFound$\",\n      \"fieldType\": \"BOOLEAN_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "12",
+      "condition": "$notFound$ \u003d false"
+    }, {
+      "taskId": "17",
+      "condition": "$notFound$\u003dtrue"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Is config file found ?",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 408,
+      "y": 1269
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "12",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_10_connectorOutputPayload`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_ELEMENT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"intValue\": \"0\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"FileData\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"TO_STRING\"\n            }\n          }\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"DECODE_BASE64_STRING\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$configFile$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "13"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Decode config file content",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 196,
+      "y": 1405
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "13",
+    "parameters": {
+      "javaScriptEngine": {
+        "key": "javaScriptEngine",
+        "value": {
+          "stringValue": "V8"
+        }
+      },
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "/**\n * Function that is called during the JavaScript Task execution.\n * @param {IntegrationEvent} event\n */\nfunction executeScript(event) {\n  // Get the configFile variable\n  var configFile \u003d event.getParameter(\"configFile\");\n  var apiMetadata \u003d event.getParameter(\"apiMetadata\");\n\n  // Check if configFile is null or empty\n  if (!configFile) {\n    event.log(\"configFile is null or empty. Cannot extract key-value pairs.\");\n    return;\n  }\n\n  // Split the configFile string into key-value pairs, considering new lines as separators\n  var keyValuePairs \u003d configFile.split(/\\s+/);\n  \n  // Iterate over the key-value pairs and create variables\n  for (var i \u003d 0; i \u003c keyValuePairs.length; i++) {\n    var enumValue \u003d  { \n        \"enumValues\": {\n          \"values\": [ { \"id\": \"string\" } ]\n        }\n      };\n    var stringValue \u003d  { \n        \"stringValues\": {\n          \"values\": [ \"string\"]\n        }\n      };  \n    var keyValuePair \u003d keyValuePairs[i].split(\"\u003d\");\n    \n    if (keyValuePair.length \u003d\u003d\u003d 2) {\n      var key \u003d keyValuePair[0];\n      var value \u003d keyValuePair[1].replace(/\"/g, \"\"); // Remove quotes if any\n      \n      // Condition to remove \"api_\" prefix from the key\n      if (key.startsWith(\"api_\")) {\n          key \u003d key.substring(4); // Remove \"api_\"\n          event.log(\"API - key: \" + key +\", value: \" + value);\n          enumValue.enumValues.values[0].id \u003d value;\n\n          switch(key) {\n            case \"targetUser\":\n              apiMetadata.api.targetUser \u003d enumValue;\n              break;\n            case \"team\":\n              apiMetadata.api.team \u003d enumValue;\n              break;\n            case \"businessUnit\":\n                apiMetadata.api.businessUnit \u003d enumValue;\n              break;\n            case \"maturityLevel\":\n                apiMetadata.api.maturityLevel \u003d enumValue;\n              break;\n            case \"apiStyle\":\n                apiMetadata.api.apiStyle \u003d enumValue;\n              break;\n            default:\n              // code block\n        }\n      } \n    }\n  }\n  event.setParameter(\"apiMetadata\", apiMetadata);\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "17"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Update API Attributes Metadata",
+    "description": "This JavaScript code processes key-value pairs from a configuration file, extracts specific keys related to API metadata, and updates the apiMetadata object accordingly. It handles cases where certain nested properties might be missing and creates them if necessary before assigning values.",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 196,
+      "y": 1541
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "16",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$apiMetadata$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$curatedAPIMetadata$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ANY_SUCCEED",
+    "displayName": "Init curatedAPIMetadata",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 1813
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "17",
+    "parameters": {
+      "javaScriptEngine": {
+        "key": "javaScriptEngine",
+        "value": {
+          "stringValue": "V8"
+        }
+      },
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "/**\n * Function that is called during the JavaScript Task execution.\n * @param {IntegrationEvent} event\n */\nfunction executeScript(event) {\n\n  var apiMetadata \u003d event.getParameter(\"apiMetadata\");\n  var apiVersion \u003d \"\";\n  var apiName \u003d \"\";\n  var extractedNamePath  \u003d \"\";\n\n  // Check if apiMetadata and apiMetadata.api.displayName exist\n  if (apiMetadata \u0026\u0026 apiMetadata.api \u0026\u0026 apiMetadata.versions) {\n\n\n\n    // check if API displayName contains version\n\n    // extract displayName and version  ------------------------------------------\n    if (apiMetadata.api.displayName) {\n        var displayName \u003d apiMetadata.api.displayName;\n\n        // Regular expression to match \"name-1\", \"name-v1\", \"name-V1\", \"name.v1\" or \"name.V1\" pattern with up to 3 digits\n        const regex \u003d /^(.+?)(?:[-._][vV]?(\\d{1,3}))?$/;\n        var match \u003d displayName.match(regex);\n\n        // If the displayName matches the version naming pattern\n        if (match) {\n          apiName \u003d match[1];\n          if (match[2]) {\n            apiVersion \u003d \"v\" + match[2]; // Add \u0027v\u0027 prefix to the version\n          }\n          event.log(\"apiName: \" + apiName + \", apiVersion: \" + apiVersion);\n\n          // extract api name (id) --------------------------------------------------\n          if (apiMetadata.api.name) {\n              var name \u003d apiMetadata.api.name;\n              extractedNamePath \u003d name.substring(0, name.lastIndexOf(\u0027/\u0027));\n              event.log(\"Extracted API path: \" + extractedNamePath);\n              // update apiMetadata API names \u0026 Fingerprint ----------------------------------\n              apiMetadata.api.name \u003d extractedNamePath + \"/\" + apiName;\n              apiMetadata.api.displayName \u003d apiName;\n              apiMetadata.api.fingerprint \u003d apiName;\n\n              // update apiMetadata version --------------------------------------------------\n              if (apiMetadata.versions \u0026\u0026 Array.isArray(apiMetadata.versions) \u0026\u0026 apiMetadata.versions.length \u003e 0) {\n                \n               \n                // Test if apiVersion is not null and not empty\n                if (apiVersion !\u003d\u003d null \u0026\u0026 apiVersion !\u003d\u003d \"\") {\n                    event.log(\"Update version name with: \" + apiVersion);\n                    apiMetadata.versions[0].version.name \u003d apiMetadata.api.name + \"/versions/\" + apiVersion ;\n                    apiMetadata.versions[0].version.displayName \u003d apiVersion;\n                } else {\n                    event.log(\"apiVersion is null or empty. Version name not updated.\");\n                }\n                \n                \n              } else {\n                // Log a message if apiMetadata or apiMetadata.versions is missing\n                event.log(\"apiMetadata or apiMetadata.versions is missing: apiMetadata.versions[0].version not updated.\");\n              }\n\n              event.log(\"apiMetadata.api.name: \" + apiMetadata.api.name);\n              event.log(\"apiMetadata.api.displayName: \" + apiMetadata.api.displayName);\n              event.log(\"apiMetadata.api.fingerprint: \" + apiMetadata.api.fingerprint);  \n              event.log(\"apiMetadata.versions[0].version.name: \" + apiMetadata.versions[0].version.name);\n              event.log(\"apiMetadata.versions[0].version.displayName: \" + apiMetadata.versions[0].version.displayName);  \n              \n              event.setParameter(\"apiMetadata\", apiMetadata);\n\n          } else {\n              event.log(\"The \u0027name\u0027 field is missing in apiMetadata.\");\n              return;\n          }\n        }\n        else {\n          // Log a message if the displayName does not match the expected pattern (name-1, name-v1, name-V1, name.v1 or name.V1).\n          event.log(\"API Display Name does not match the expected pattern (name-1, name-v1, name-V1, name.v1 or name.V1).\\n ApiMetadata not changed.\");\n          return;\n        }\n      } else {\n        // Log a message if the displayName does not match the expected pattern (name-1, name-v1, name-V1, name.v1 or name.V1).\n        event.log(\"API Display Name not found.\");\n        return;\n      }\n  } else {\n    // Log a message if apiMetadata or apiMetadata.api.displayName is missing\n    event.log(\"apiMetadata or apiMetadata.api.displayName is missing.\");\n  }\n\n \n\n\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "16"
+    }],
+    "taskExecutionStrategy": "WHEN_ANY_SUCCEED",
+    "displayName": "Validate API Version",
+    "description": "This script extracts and updates API metadata, including name, display name, and version. It also validates if the API version is not null or empty before updating the version name.",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 1677
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "18",
+    "parameters": {
+      "javaScriptEngine": {
+        "key": "javaScriptEngine",
+        "value": {
+          "stringValue": "V8"
+        }
+      },
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "/**\n * Function that is called during the JavaScript Task execution.\n * @param {IntegrationEvent} event\n */\n\nfunction executeScript(event) {\n\n  // Get the configFile variable\n  const specContent \u003d event.getParameter(\"specContent\");\n  const specContentJSON \u003d event.getParameter(\"specContentJSON\");\n\n  var apiMetadata \u003d event.getParameter(\"apiMetadata\");\n  var specFileMimeType \u003d event.getParameter(\"specFileMimeType\");\n\n // Check if configFile is null or empty\n  if (!specContent) {\n    event.log(\"Specification file is null or empty.\");\n    return;\n  }\n  \n  // to be used with string type attributes\n  let stringValue \u003d  { \n    \"stringValues\": {\n      \"values\": [ \"string\"]\n    }\n  };  \n\n  let value;\n  // Check if either x-data-classification (aka compliance) exists in specContentJSON.info or root level\n  value \u003d specContentJSON[\"x-data-classification\"] ?? specContentJSON.info?.[\"x-data-classification\"] ?? null;\n  if (value) {\n    let enumValue \u003d  { \n        \"enumValues\": {\n          \"values\": [ { \"id\": value } ]\n        }\n    };\n    event.log(\"compliance: \" + value);\n    //enumValue.enumValues.values[0].id \u003d value;\n    apiMetadata.versions[0].version.compliance \u003d enumValue;\n  }\n  \n  // Check if either x-lifecycle exists in specContentJSON.info or root level\n  value \u003d specContentJSON[\"x-lifecycle\"] ?? specContentJSON.info?.[\"x-lifecycle\"] ?? null;    \n  if (value) {\n    let enumValue \u003d  { \n        \"enumValues\": {\n          \"values\": [ { \"id\": value } ]\n        }\n    };\n    event.log(\"lifecycle: \" + value);\n    //enumValue.enumValues.values[0].id \u003d value;\n    apiMetadata.versions[0].version.lifecycle \u003d enumValue;\n  }\n\n  // Check if either x-lifecycle exists in specContentJSON.info or root level\n  value \u003d specContentJSON[\"x-accreditation\"] ?? specContentJSON.info?.[\"x-accreditation\"] ?? null;    \n  if (value) {\n    let enumValue \u003d  { \n        \"enumValues\": {\n          \"values\": [ { \"id\": value } ]\n        }\n    };\n    event.log(\"accreditation: \" + value);\n    //enumValue.enumValues.values[0].id \u003d value;\n    apiMetadata.versions[0].version.accreditation \u003d enumValue;\n  }\n  \n  // Get the current timestamp in RFC 3339 format\n  const now \u003d new Date();\n  const timestamp \u003d now.toISOString();\n\n  // init spec format for apiData\n  var specMetadata \u003d {\n    spec: {\n      \"displayName\": apiMetadata.api.displayName,\n      \"specType\": {\n          \"enumValues\": {\n              \"values\": [{\"id\": \"openapi\"}]\n            }\n        },\n      \"contents\": {\n          \"contents\": specContent,\n          \"mimeType\": specFileMimeType\n      }\n    },\n    \"originalUpdateTime\": timestamp\n  };\n\n  event.log(\"Specification MetaData: \" + specMetadata);\n\n  if (apiMetadata.versions \u0026\u0026 Array.isArray(apiMetadata.versions) \u0026\u0026 apiMetadata.versions.length \u003e 0) {\n      var specs \u003d [];\n      specs.push(specMetadata);\n      apiMetadata.versions[0].specs \u003d specs;\n  } else {\n      event.log(\"apiMetadata or apiMetadata.versions not defined\");\n  }\n  \n  event.setParameter(\"apiMetadata\", apiMetadata);\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "9"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Update Version Attributes Metadata",
+    "description": "This script processes API specification content, extracts metadata, and sets parameters for API management. The code was modified to improve readability.",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 408,
+      "y": 861
+    }
+  }, {
+    "task": "JsonnetMapperTask",
+    "taskId": "21",
+    "parameters": {
+      "template": {
+        "key": "template",
+        "value": {
+          "stringValue": "local f \u003d import \"functions\";\nlocal inputs \u003d {\"specContentDecoded\": std.extVar(\"specContentDecoded\")};\n{\"specContentJSON\": std.parseYaml(inputs[\"specContentDecoded\"])}"
+        }
+      },
+      "diagramMetadata": {
+        "key": "diagramMetadata",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/google.protobuf.Struct\",\n  \"value\": {\n    \"0\": {\n      \"inputs\": [{\n        \"name\": \"specContentDecoded\",\n        \"type\": 1.0,\n        \"tokenType\": 0.0\n      }],\n      \"outputs\": [{\n        \"name\": \"specContentJSON\",\n        \"type\": 17.0,\n        \"tokenType\": 0.0\n      }],\n      \"mappings\": [{\n        \"inputs\": [\"specContentDecoded\"],\n        \"output\": \"specContentJSON\",\n        \"transformation\": {\n          \"operationId\": \"TRANSFORMATION_0\",\n          \"coordinates\": [798.0, 168.00711059570312],\n          \"operations\": [{\n            \"type\": 1.0,\n            \"key\": 99.0,\n            \"params\": [{\n              \"type\": 3.0,\n              \"value\": \"specContentDecoded\",\n              \"datatype\": 1.0\n            }]\n          }]\n        }\n      }]\n    }\n  }\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "18"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "convert YAML to JSON",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 408,
+      "y": 725
+    }
+  }, {
+    "task": "GenericConnectorTask",
+    "taskId": "3",
+    "parameters": {
+      "filterClause": {
+        "key": "filterClause",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "entityType": {
+        "key": "entityType",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "executeQueryRequestConfig": {
+        "key": "executeQueryRequestConfig"
+      },
+      "authOverrideEnabled": {
+        "key": "authOverrideEnabled",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "entityId": {
+        "key": "entityId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "enableDynamicConnection": {
+        "key": "enableDynamicConnection",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "serviceName": {
+        "key": "serviceName",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "connectorOutputPayload": {
+        "key": "connectorOutputPayload",
+        "value": {
+          "stringValue": "$`Task_3_connectorOutputPayload`$"
+        }
+      },
+      "timeout": {
+        "key": "timeout",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "listEntitiesSortByColumns": {
+        "key": "listEntitiesSortByColumns",
+        "value": {
+          "stringArray": {
+          }
+        }
+      },
+      "listEntitiesPageToken": {
+        "key": "listEntitiesPageToken",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "connectorInputPayload": {
+        "key": "connectorInputPayload",
+        "value": {
+          "stringValue": "$`Task_3_connectorInputPayload`$"
+        }
+      },
+      "listEntitiesPageSize": {
+        "key": "listEntitiesPageSize",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "host": {
+        "key": "host",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "useHttpHeaderForDynamicAuthConfig": {
+        "key": "useHttpHeaderForDynamicAuthConfig"
+      },
+      "connectionName": {
+        "key": "connectionName",
+        "value": {
+          "stringValue": "$`CONFIG_githubConnectionName`$"
+        }
+      },
+      "operation": {
+        "key": "operation",
+        "value": {
+          "stringValue": "EXECUTE_ACTION"
+        }
+      },
+      "config": {
+        "key": "config"
+      },
+      "connectionVersion": {
+        "key": "connectionVersion",
+        "value": {
+          "stringValue": "projects/bap-emea-apigee-5/locations/global/providers/github/connectors/github/versions/1"
+        }
+      },
+      "actionName": {
+        "key": "actionName",
+        "value": {
+          "stringValue": "DownloadFile"
+        }
+      },
+      "dynamicAuthConfig": {
+        "key": "dynamicAuthConfig",
+        "value": {
+          "jsonValue": "null"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "8"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Fetch spec file from Github",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 317
+    }
+  }, {
+    "task": "SubWorkflowForEachLoopV2Task",
+    "taskId": "4",
+    "parameters": {
+      "iterationElementMapping": {
+        "key": "iterationElementMapping",
+        "value": {
+          "stringValue": "apiMetadata"
+        }
+      },
+      "triggerId": {
+        "key": "triggerId",
+        "value": {
+          "stringValue": "private_trigger/apiHubCurationGithub_v1_Private"
+        }
+      },
+      "aggregatorParameterMapping": {
+        "key": "aggregatorParameterMapping",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"curatedAPIMetadata\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"curatedAPIMetadataList\"\n      }\n    }\n  }]\n}"
+        }
+      },
+      "loopMetadata": {
+        "key": "loopMetadata",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_4_loopMetadata`$"]
+          }
+        }
+      },
+      "disableEucPropagation": {
+        "key": "disableEucPropagation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "listToIterate": {
+        "key": "listToIterate",
+        "value": {
+          "stringValue": "$apiData.apiMetadataList.apiMetadata$"
+        }
+      },
+      "workflowName": {
+        "key": "workflowName",
+        "value": {
+          "stringValue": "apiHubCurationGithub-v1"
+        }
+      },
+      "requestParameterMapping": {
+        "key": "requestParameterMapping"
+      },
+      "overrideParameterMapping": {
+        "key": "overrideParameterMapping"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "5"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "For Each API",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 140,
+      "y": 181
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "5",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$apiData$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"SET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$curatedAPIMetadataList$\"\n            }\n          }, {\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"apiMetadataList.apiMetadata\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$apiData$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Construct response",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 140,
+      "y": 317
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "6",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$apiMetadata$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$apiMetadata$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$apiMetadata$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"api\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"displayName\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"TO_STRING\"\n            }\n          }\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$specFileExtension$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$githubSpecFileName$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"/\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$githubSpecFileName$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_3_connectorInputPayload`.Path$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`CONFIG_githubRepoOwnerName`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_3_connectorInputPayload`.OwnerLogin$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`CONFIG_githubRepoName`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_3_connectorInputPayload`.Repository$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "3"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "init Github Connector Spec Variables",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 181
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "7",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_3_connectorOutputPayload`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_ELEMENT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"intValue\": \"0\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"FileData\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"TO_STRING\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$specContent$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$specContent$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"DECODE_BASE64_STRING\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$specContentDecoded$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "21"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "get / decode Spec Contents",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 408,
+      "y": 589
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "8",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"BOOLEAN_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_3_connectorOutputPayload`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_ELEMENT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"intValue\": \"0\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"GET_PROPERTY\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"Success\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"jsonFunction\": {\n              \"functionName\": \"TO_BOOLEAN\"\n            }\n          }\n        }, {\n          \"functionType\": {\n            \"booleanFunction\": {\n              \"functionName\": \"NOT\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$notFound$\",\n      \"fieldType\": \"BOOLEAN_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "7",
+      "condition": "$notFound$ \u003d false"
+    }, {
+      "taskId": "17",
+      "condition": "$notFound$\u003dtrue"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "is spec file found ?",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 453
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "9",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$githubApiHubConfigFileName$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_10_connectorInputPayload`.Path$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`CONFIG_githubRepoName`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_10_connectorInputPayload`.Repository$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`CONFIG_githubRepoOwnerName`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_10_connectorInputPayload`.OwnerLogin$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "10"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "init Github Connector Config Variables",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 408,
+      "y": 997
+    }
+  }],
+  "integrationParameters": [{
+    "key": "`ExecutionMode`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`ExecutionMode`",
+    "isTransient": true
+  }, {
+    "key": "`ErrorInfo`",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"message\": \"\",\n  \"code\": 0.0\n}"
+    },
+    "displayName": "`ErrorInfo`",
+    "isTransient": true,
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"code\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+  }, {
+    "key": "`ExecutionId`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`ExecutionId`",
+    "isTransient": true
+  }, {
+    "key": "`IntegrationName`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`IntegrationName`",
+    "isTransient": true
+  }, {
+    "key": "`Region`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`Region`",
+    "isTransient": true
+  }, {
+    "key": "`ProjectId`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`ProjectId`",
+    "isTransient": true
+  }, {
+    "key": "responsePayload",
+    "dataType": "JSON_VALUE",
+    "displayName": "responsePayload",
+    "inputOutputType": "OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"api_metadata_list\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"api_metadata\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"original_create_time\": {\n                \"type\": \"string\"\n              },\n              \"versions\": {\n                \"type\": \"array\",\n                \"items\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"specs\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                          \"spec\": {\n                            \"type\": \"object\",\n                            \"properties\": {\n                              \"contents\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                  \"mime_type\": {\n                                    \"type\": \"string\"\n                                  },\n                                  \"contents\": {\n                                    \"type\": \"string\"\n                                  }\n                                }\n                              },\n                              \"name\": {\n                                \"type\": \"string\"\n                              },\n                              \"spec_type\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                  \"enum_values\": {\n                                    \"type\": \"object\",\n                                    \"properties\": {\n                                      \"values\": {\n                                        \"type\": \"array\",\n                                        \"items\": {\n                                          \"type\": \"object\",\n                                          \"properties\": {\n                                            \"id\": {\n                                              \"type\": \"string\"\n                                            },\n                                            \"display_name\": {\n                                              \"type\": \"string\"\n                                            }\n                                          }\n                                        }\n                                      }\n                                    }\n                                  },\n                                  \"attribute\": {\n                                    \"type\": \"string\"\n                                  }\n                                }\n                              },\n                              \"display_name\": {\n                                \"type\": \"string\"\n                              }\n                            }\n                          }\n                        }\n                      }\n                    },\n                    \"version\": {\n                      \"type\": \"object\",\n                      \"properties\": {\n                        \"name\": {\n                          \"type\": \"string\"\n                        },\n                        \"display_name\": {\n                          \"type\": \"string\"\n                        }\n                      }\n                    }\n                  }\n                }\n              },\n              \"original_update_time\": {\n                \"type\": \"string\"\n              },\n              \"api\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"owner\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"email\": {\n                        \"type\": \"string\"\n                      }\n                    }\n                  },\n                  \"name\": {\n                    \"type\": \"string\"\n                  },\n                  \"fingerprint\": {\n                    \"type\": \"string\"\n                  },\n                  \"description\": {\n                    \"type\": \"string\"\n                  },\n                  \"target_user\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"string_values\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                          \"values\": {\n                            \"type\": \"array\",\n                            \"items\": {\n                              \"type\": \"string\"\n                            }\n                          }\n                        }\n                      },\n                      \"attribute\": {\n                        \"type\": \"string\"\n                      }\n                    }\n                  },\n                  \"display_name\": {\n                    \"type\": \"string\"\n                  }\n                }\n              },\n              \"original_id\": {\n                \"type\": \"string\"\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "envKey",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "projects/apihub-bugbash-march-31/locations/us-west1/attributes/plugin-system-apigee-x-and-hybrid-environment"
+    },
+    "displayName": "envKey"
+  }, {
+    "key": "curatedAPIMetadata",
+    "dataType": "JSON_VALUE",
+    "displayName": "curatedAPIMetadata",
+    "inputOutputType": "OUT"
+  }, {
+    "key": "`Task_4_loopMetadata`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_4_loopMetadata`",
+    "isTransient": true,
+    "producer": "1_4",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"sub_integration_execution_ids\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"current_iteration_count\": {\n      \"type\": \"number\"\n    },\n    \"failure_message\": {\n      \"type\": \"string\"\n    },\n    \"failure_location\": {\n      \"type\": \"string\"\n    },\n    \"current_element\": {\n      \"type\": [\"string\", \"number\", \"object\", \"array\"]\n    }\n  }\n}"
+  }, {
+    "key": "curatedAPIMetadataList",
+    "dataType": "JSON_VALUE",
+    "displayName": "curatedAPIMetadataList"
+  }, {
+    "key": "specContent",
+    "dataType": "STRING_VALUE",
+    "displayName": "specContent"
+  }, {
+    "key": "gcsResponseTemp",
+    "dataType": "JSON_VALUE",
+    "displayName": "gcsResponseTemp"
+  }, {
+    "key": "`Task_3_connectorInputPayload`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_3_connectorInputPayload`",
+    "producer": "1_3",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"LocalPath\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The absolute path where the file will be saved.\",\n      \"properties\": {\n      }\n    },\n    \"OutputStream\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"An instance of an output stream where file data is written to. Only used if LocalPath is not set.\",\n      \"properties\": {\n      }\n    },\n    \"Path\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The file path, relative to the repository root.\",\n      \"properties\": {\n      }\n    },\n    \"Repository\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The repository to download the file from.\",\n      \"properties\": {\n      }\n    },\n    \"OwnerLogin\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The owner of the repository.\",\n      \"properties\": {\n      }\n    },\n    \"Branch\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The branch to download the file from. Defaults to \\u0027main\\u0027.\",\n      \"properties\": {\n      }\n    }\n  }\n}"
+  }, {
+    "key": "`Task_3_connectorOutputPayload`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_3_connectorOutputPayload`",
+    "isTransient": true,
+    "producer": "1_3",
+    "jsonSchema": "{\n  \"type\": \"array\",\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n    },\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\"\n  }\n}"
+  }, {
+    "key": "notFound",
+    "dataType": "BOOLEAN_VALUE",
+    "displayName": "notFound"
+  }, {
+    "key": "githubApiHubConfigFileName",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "/ApiHub.cfg"
+    },
+    "displayName": "githubApiHubConfigFileName"
+  }, {
+    "key": "configFile",
+    "dataType": "STRING_VALUE",
+    "displayName": "configFile"
+  }, {
+    "key": "apiMetadata",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n}"
+    },
+    "displayName": "apiMetadata",
+    "inputOutputType": "IN",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"versions\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"deployments\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"originalCreateTime\": {\n                  \"type\": \"string\"\n                },\n                \"originalUpdateTime\": {\n                  \"type\": \"string\"\n                },\n                \"originalId\": {\n                  \"type\": \"string\"\n                },\n                \"deployment\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"deploymentType\": {\n                      \"type\": \"object\",\n                      \"properties\": {\n                        \"attribute\": {\n                          \"type\": \"string\"\n                        },\n                        \"enumValues\": {\n                          \"type\": \"object\",\n                          \"properties\": {\n                            \"values\": {\n                              \"type\": \"array\",\n                              \"items\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                  \"id\": {\n                                    \"type\": \"string\"\n                                  }\n                                }\n                              }\n                            }\n                          }\n                        }\n                      }\n                    },\n                    \"endpoints\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"type\": \"string\"\n                      }\n                    },\n                    \"displayName\": {\n                      \"type\": \"string\"\n                    },\n                    \"description\": {\n                      \"type\": \"string\"\n                    },\n                    \"attributes\": {\n                      \"type\": \"object\",\n                      \"properties\": {\n                        \"projects/api-hub-demo-5/locations/us-central1/attributes/plugin-system-apigee-x-and-hybrid-environment\": {\n                          \"type\": \"object\",\n                          \"properties\": {\n                            \"stringValues\": {\n                              \"type\": \"object\",\n                              \"properties\": {\n                                \"values\": {\n                                  \"type\": \"array\",\n                                  \"items\": {\n                                    \"type\": \"string\"\n                                  }\n                                }\n                              }\n                            },\n                            \"attribute\": {\n                              \"type\": \"string\"\n                            }\n                          }\n                        },\n                        \"projects/api-hub-demo-5/locations/us-central1/attributes/plugin-system-apigee-x-and-hybrid-organization\": {\n                          \"type\": \"object\",\n                          \"properties\": {\n                            \"stringValues\": {\n                              \"type\": \"object\",\n                              \"properties\": {\n                                \"values\": {\n                                  \"type\": \"array\",\n                                  \"items\": {\n                                    \"type\": \"string\"\n                                  }\n                                }\n                              }\n                            },\n                            \"attribute\": {\n                              \"type\": \"string\"\n                            }\n                          }\n                        }\n                      }\n                    },\n                    \"resourceUri\": {\n                      \"type\": \"string\"\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"originalCreateTime\": {\n            \"type\": \"string\"\n          },\n          \"originalUpdateTime\": {\n            \"type\": \"string\"\n          },\n          \"originalId\": {\n            \"type\": \"string\"\n          },\n          \"version\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"displayName\": {\n                \"type\": \"string\"\n              },\n              \"name\": {\n                \"type\": \"string\"\n              }\n            }\n          }\n        }\n      }\n    },\n    \"originalUpdateTime\": {\n      \"type\": \"string\"\n    },\n    \"api\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"displayName\": {\n          \"type\": \"string\"\n        },\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"fingerprint\": {\n          \"type\": \"string\"\n        }\n      }\n    },\n    \"originalId\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+  }, {
+    "key": "githubSpecFileName",
+    "dataType": "STRING_VALUE",
+    "displayName": "githubSpecFileName"
+  }, {
+    "key": "specFileExtension",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ".yaml"
+    },
+    "displayName": "specFileExtension"
+  }, {
+    "key": "specFileMimeType",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "application/yaml"
+    },
+    "displayName": "specFileMimeType"
+  }, {
+    "key": "isAttribute",
+    "dataType": "BOOLEAN_VALUE",
+    "defaultValue": {
+      "booleanValue": false
+    },
+    "displayName": "isAttribute"
+  }, {
+    "key": "isSpecification",
+    "dataType": "BOOLEAN_VALUE",
+    "displayName": "isSpecification"
+  }, {
+    "key": "specContentDecoded",
+    "dataType": "STRING_VALUE",
+    "displayName": "specContentDecoded"
+  }, {
+    "key": "specContentJSON",
+    "dataType": "JSON_VALUE",
+    "displayName": "specContentJSON"
+  }, {
+    "key": "`Task_10_connectorInputPayload`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_10_connectorInputPayload`",
+    "producer": "1_10",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"Branch\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The branch to download the file from. Defaults to \\u0027main\\u0027.\",\n      \"properties\": {\n      }\n    },\n    \"LocalPath\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The absolute path where the file will be saved.\",\n      \"properties\": {\n      }\n    },\n    \"OutputStream\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"An instance of an output stream where file data is written to. Only used if LocalPath is not set.\",\n      \"properties\": {\n      }\n    },\n    \"Path\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The file path, relative to the repository root.\",\n      \"properties\": {\n      }\n    },\n    \"Repository\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The repository to download the file from.\",\n      \"properties\": {\n      }\n    },\n    \"OwnerLogin\": {\n      \"type\": [\"string\", \"null\"],\n      \"description\": \"The owner of the repository.\",\n      \"properties\": {\n      }\n    }\n  }\n}"
+  }, {
+    "key": "`Task_10_connectorOutputPayload`",
+    "dataType": "JSON_VALUE",
+    "displayName": "`Task_10_connectorOutputPayload`",
+    "isTransient": true,
+    "producer": "1_10",
+    "jsonSchema": "{\n  \"type\": \"array\",\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n    },\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\"\n  }\n}"
+  }, {
+    "key": "apiData",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"apiMetadataList\": {\n    \"apiMetadata\": [{\n      \"api\": {\n        \"name\": \"projects/apigee.org/locations/europe-west1/apis/apigee.org-cl-AudienceAnalyse-v1\",\n        \"displayName\": \"cl-AudienceAnalyse-v1\",\n        \"fingerprint\": \"cl-audienceanalyse-v1\"\n      },\n      \"versions\": [{\n        \"version\": {\n          \"name\": \"projects/apigee.org/locations/europe-west1/apis/apigee.org-cl-AudienceAnalyse-v1/versions/version-1\",\n          \"displayName\": \"version-1\"\n        },\n        \"deployments\": [{\n          \"deployment\": {\n            \"displayName\": \"cl-AudienceAnalyse-v1\",\n            \"deploymentType\": {\n              \"enumValues\": {\n                \"values\": [{\n                  \"id\": \"apigee\"\n                }]\n              },\n              \"attribute\": \"projects/apigee.org/locations/europe-west1/attributes/system-deployment-type\"\n            },\n            \"resourceUri\": \"organizations/apigee.org/apis/cl-AudienceAnalyse-v1/revisions/24/environments/default-dev\",\n            \"endpoints\": [\"https://34-149-164-96.nip.io//v1/audience\"],\n            \"attributes\": {\n              \"projects/apigee.org/locations/europe-west1/attributes/plugin-system-apigee-x-and-hybrid-environment\": {\n                \"stringValues\": {\n                  \"values\": [\"default-dev\"]\n                },\n                \"attribute\": \"projects/apigee.org/locations/europe-west1/attributes/plugin-system-apigee-x-and-hybrid-environment\"\n              },\n              \"projects/apigee.org/locations/europe-west1/attributes/plugin-system-apigee-x-and-hybrid-organization\": {\n                \"stringValues\": {\n                  \"values\": [\"apigee.org\"]\n                },\n                \"attribute\": \"projects/apigee.org/locations/europe-west1/attributes/plugin-system-apigee-x-and-hybrid-organization\"\n              }\n            }\n          },\n          \"originalId\": \"apis/cl-AudienceAnalyse-v1/revisions/24/environments/default-dev\",\n          \"originalCreateTime\": \"2024-08-29T16:28:54.137Z\",\n          \"originalUpdateTime\": \"2024-08-29T16:28:54.137Z\"\n        }],\n        \"originalId\": \"apis/cl-AudienceAnalyse-v1/revisions/24\",\n        \"originalCreateTime\": \"2024-08-29T16:27:47.136Z\",\n        \"originalUpdateTime\": \"2024-08-29T16:27:47.136Z\"\n      }],\n      \"originalId\": \"apis/cl-AudienceAnalyse-v1\",\n      \"originalUpdateTime\": \"2024-08-29T16:27:47.136Z\"\n    }]\n  }\n}"
+    },
+    "displayName": "apiData",
+    "inputOutputType": "IN_OUT",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"apiMetadataList\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"apiMetadata\": {\n          \"type\": [\"array\", \"null\"],\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"versions\": {\n                \"type\": \"array\",\n                \"items\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"specs\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                          \"spec\": {\n                            \"type\": \"object\",\n                            \"properties\": {\n                              \"specType\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                  \"attribute\": {\n                                    \"type\": \"string\"\n                                  },\n                                  \"enumValues\": {\n                                    \"type\": \"object\",\n                                    \"properties\": {\n                                      \"values\": {\n                                        \"type\": \"array\",\n                                        \"items\": {\n                                          \"type\": \"object\",\n                                          \"properties\": {\n                                            \"displayName\": {\n                                              \"type\": \"string\"\n                                            },\n                                            \"id\": {\n                                              \"type\": \"string\"\n                                            }\n                                          }\n                                        }\n                                      }\n                                    }\n                                  }\n                                }\n                              },\n                              \"contents\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                  \"contents\": {\n                                    \"type\": \"string\"\n                                  },\n                                  \"mimeType\": {\n                                    \"type\": \"string\"\n                                  }\n                                }\n                              },\n                              \"displayName\": {\n                                \"type\": \"string\"\n                              },\n                              \"name\": {\n                                \"type\": \"string\"\n                              }\n                            }\n                          }\n                        }\n                      }\n                    },\n                    \"deployments\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                          \"deployment\": {\n                            \"type\": \"object\",\n                            \"properties\": {\n                              \"environment\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                  \"attribute\": {\n                                    \"type\": \"string\"\n                                  },\n                                  \"enumValues\": {\n                                    \"type\": \"object\",\n                                    \"properties\": {\n                                      \"values\": {\n                                        \"type\": \"array\",\n                                        \"items\": {\n                                          \"type\": \"object\",\n                                          \"properties\": {\n                                            \"displayName\": {\n                                              \"type\": \"string\"\n                                            },\n                                            \"id\": {\n                                              \"type\": \"string\"\n                                            }\n                                          }\n                                        }\n                                      }\n                                    }\n                                  }\n                                }\n                              },\n                              \"displayName\": {\n                                \"type\": \"string\"\n                              },\n                              \"name\": {\n                                \"type\": \"string\"\n                              }\n                            }\n                          }\n                        }\n                      }\n                    },\n                    \"version\": {\n                      \"type\": \"object\",\n                      \"properties\": {\n                        \"displayName\": {\n                          \"type\": \"string\"\n                        },\n                        \"name\": {\n                          \"type\": \"string\"\n                        }\n                      }\n                    }\n                  }\n                }\n              },\n              \"originalCreateTime\": {\n                \"type\": \"string\"\n              },\n              \"originalUpdateTime\": {\n                \"type\": \"string\"\n              },\n              \"api\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"owner\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"email\": {\n                        \"type\": \"string\"\n                      }\n                    }\n                  },\n                  \"displayName\": {\n                    \"type\": \"string\"\n                  },\n                  \"name\": {\n                    \"type\": \"string\"\n                  },\n                  \"fingerprint\": {\n                    \"type\": \"string\"\n                  },\n                  \"description\": {\n                    \"type\": \"string\"\n                  },\n                  \"targetUser\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"stringValues\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                          \"values\": {\n                            \"type\": \"array\",\n                            \"items\": {\n                              \"type\": \"string\"\n                            }\n                          }\n                        }\n                      },\n                      \"attribute\": {\n                        \"type\": \"string\"\n                      }\n                    }\n                  }\n                }\n              },\n              \"originalId\": {\n                \"type\": \"string\"\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}"
+  }],
+  "cloudLoggingDetails": {
+    "cloudLoggingSeverity": "INFO",
+    "enableCloudLogging": true
+  },
+  "integrationConfigParameters": [{
+    "parameter": {
+      "key": "`CONFIG_githubRepoName`",
+      "dataType": "STRING_VALUE",
+      "defaultValue": {
+        "stringValue": "demoSpecs"
+      },
+      "displayName": "`CONFIG_githubRepoName`"
+    },
+    "value": {
+      "stringValue": "demoSpecs"
+    }
+  }, {
+    "parameter": {
+      "key": "`CONFIG_githubRepoOwnerName`",
+      "dataType": "STRING_VALUE",
+      "defaultValue": {
+        "stringValue": "g-lalevee"
+      },
+      "displayName": "`CONFIG_githubRepoOwnerName`"
+    },
+    "value": {
+      "stringValue": "g-lalevee"
+    }
+  }, {
+    "parameter": {
+      "key": "`CONFIG_githubConnectionName`",
+      "dataType": "STRING_VALUE",
+      "defaultValue": {
+        "stringValue": "projects/bap-emea-apigee-5/locations/europe-west1/connections/cl-github"
+      },
+      "displayName": "`CONFIG_githubConnectionName`"
+    },
+    "value": {
+      "stringValue": "projects/bap-emea-apigee-5/locations/europe-west1/connections/cl-github"
+    }
+  }]
+}

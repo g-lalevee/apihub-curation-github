@@ -10,7 +10,7 @@
 
 This repository provides a concrete example of a custom **API Hub Curation** process, built using **Google Application Integration**. This process specifically ingests API metadata from a **GitHub repository**.
 
-API Hub Curation involves transforming and enriching API metadata that has been ingested by Apigee API Hub plugins. For a comprehensive overview, refer to the [Apigee API Hub Curation documentation](https://cloud.google.com/apigee/docs/apihub/curations).
+API Hub Curation involves transforming and enriching API metadata that has been ingested by Apigee API hub plugins. For a comprehensive overview, refer to the [Apigee API hub Curation documentation](https://cloud.google.com/apigee/docs/apihub/curations).
 
 The curation logic implemented here performs the following steps for each ingested API:
 
@@ -21,12 +21,15 @@ The curation logic implemented here performs the following steps for each ingest
         * **API Metadata** from an API configuration file.
 * **API Renaming:** The API's name is standardized by removing any versioning information (if present) to consolidate all versions under a single, consistent name.
 
+![integration process](./images/integration.png)
+
 
 ## Prerequisites
 
-To implement this sample, you'll need a GCP account with both Apigee API Hub and Application Integration activated. If needed refer to Google Documentation [Provision API hub](https://cloud.google.com/apigee/docs/apihub/provision)and [Set up Application Integration](https://cloud.google.com/application-integration/docs/setup-application-integration).
+To implement this sample, you'll need a GCP account with both Apigee API hub and Application Integration activated. If needed refer to Google Documentation [Provision API hub](https://cloud.google.com/apigee/docs/apihub/provision)and [Set up Application Integration](https://cloud.google.com/application-integration/docs/setup-application-integration).
 
 You'll also need a GitHub account with privileges that allow setting up external access to your repositories, during Github Integraition Connector setup.
+
 
 
 ## Github setup
@@ -34,12 +37,17 @@ You'll also need a GitHub account with privileges that allow setting up external
 To begin, you'll need a **GitHub repository** to store your configuration and API specification files. If you haven't already, here are some essential GitHub tasks you'll need to complete, depending on your setup:
 
 * **Create a GitHub account**: If you're new to GitHub, start by [creating an account](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github).
+
 * **Create new repositories**: You'll need to [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) to host your files.
+  > If you want to test the Integration using sample default data, you can copy files **specfile.yaml** and **apiHub.cfg** in your repository.  
+
 * **Create a GitHub App** to authenticate connexion from Integration Connexion. See Github documentation [create a GitHub App](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps). 
 
-> ℹ️ One Github App. can allow access to one or many repositories : you can configure it in Github App. permissions.
+  > ℹ️ One Github App. can allow access to one or many repositories : you can configure it in Github App. permissions.
 
-> ℹ️ the **Client ID** and **Client Secret** generated during this process are crucial for setting up your GitHub Integration Connection. You'll also need the **Callback URL** from your Integration Connection to finalize the GitHub App creation. For more details, refer to the [GitHub Integration Connection documentation](https://cloud.google.com/integration-connectors/docs/connectors/github/configure#configure-the-connector).
+  > ℹ️ the **Client ID** and **Client Secret** generated during this process are crucial for setting up your GitHub Integration Connection. You'll also need the **Callback URL** from your Integration Connection to finalize the GitHub App creation. For more details, refer to the [GitHub Integration Connection documentation](https://cloud.google.com/integration-connectors/docs/connectors/github/configure#configure-the-connector).
+
+
 
 ## Integration Connexion Setup
 
@@ -69,4 +77,36 @@ If you are creating a new integration:
     - `CONFIG_githubRepoName`: the name of the Github repository used to store API specification files and configuration files.
     - `CONFIG_githubRepoOwnerName`: the name of the Github owner name of the repository.
 9) In the integration designer, click Deploy.
-10) Click Test integration. This runs the integration and displays the execution result in the Test Integration dialog.
+
+
+
+## Apigee API hub Setup
+
+Now you'll create a new custom Curation within Apigee API Hub and then associate it with an ingestion plugin.
+
+First, let's create the custom Curation:
+
+1.  In the Google Cloud console, navigate to the [Apigee API Hub page](https://console.cloud.google.com/apigee/api-hub/get-started).
+2.  In the left navigation menu, click **Settings**.
+3.  Select the **Curations** sub-menu, then click **Setup a new Curation**.
+4.  Enter a **Curation name** and, from the dropdown list, select your Integration (**apiHubCurationGithub-v1**) and the **api_trigger/curation** trigger.
+5.  Click **Create curation**.
+
+If you need more detailed instructions, you can refer to the [API Hub documentation on creating custom curations](https://cloud.google.com/apigee/docs/apihub/manage-curations#create-custom-curation).
+
+Next, you need to associate this new curation with your ingestion plugin. Currently, API Hub doesn't support editing existing plugin instances. This means if you want to change a plugin instance's configuration (like its curation logic), you'll need to delete the existing one and create a new one. For further information, see the [API Hub documentation on managing plugin instances](https://cloud.google.com/apigee/docs/apihub/manage-plugin-instances).
+
+To associate your new curation:
+
+1.  Select the **Plugin** sub-menu, then click **Setup a new Plugin**.
+2.  Delete the existing plugin instance.
+3.  Create a new plugin instance, providing the following:
+    * **Display name**: A name for your plugin instance.
+    * **Sync frequency**: How often the plugin instance should sync with its data source (default is Hourly).
+    * **Curation**: Select the curation you created in the steps above.
+
+
+## Test Integration
+
+To be able to test with the provided data
+10) Click Test integration. This runs the integration with input variable **apiData** default values and displays the execution result in the Test Integration dialog.
