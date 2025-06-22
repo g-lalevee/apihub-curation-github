@@ -150,7 +150,7 @@ You'll need to configure the following **API Hub system attributes** with their 
 
 For detailed instructions on how to update API Hub system attributes via the interface or API, refer to the [API Hub System Attributes documentation](https://cloud.google.com/apigee/docs/apihub/manage-attributes#system-attributes).
 
----
+
 
 ### Unit Test from Application Integration
 
@@ -160,7 +160,7 @@ You can perform a quick unit test directly within Application Integration:
 2.  Ensure the Integration is deployed.
 3.  Click the **Test** button and validate the default values. This will run the integration and display the execution results in the "Test Integration" dialog.
 
----
+
 
 ### API Hub Plugin Manual Test
 
