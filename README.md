@@ -1,4 +1,4 @@
-# Apigee Api Hub: Curation process using Github files
+# Apigee API Hub: Curation process using Github repository
 
 [![PyPI status](https://img.shields.io/pypi/status/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/) 
 
@@ -6,6 +6,7 @@
 
 
 ---
+
 ## Goal
 
 This repository provides a concrete example of a custom **API Hub Curation** process, built using **Google Application Integration**. This process specifically ingests API metadata from a **GitHub repository**.
