@@ -248,75 +248,75 @@ You can perform a quick unit test directly within Application Integration:
                "name":"projects/apigee.org/locations/europe-west1/apis/cl-AudienceAnalyse",
                "displayName":"cl-AudienceAnalyse",
                "fingerprint":"cl-AudienceAnalyse",
-               "targetUser":{
-                  "enumValues":{
-                     "values":[
-                        {
-                           "id":"internal"
-                        }
-                     ]
-                  }
-               },
-               "team":{
-                  "enumValues":{
-                     "values":[
-                        {
-                           "id":"testing"
-                        }
-                     ]
-                  }
-               },
-               "businessUnit":{
-                  "enumValues":{
-                     "values":[
-                        {
-                           "id":"none"
-                        }
-                     ]
-                  }
-               },
-               "maturityLevel":{
-                  "enumValues":{
-                     "values":[
-                        {
-                           "id":"level-1"
-                        }
-                     ]
-                  }
-               },
-               "apiStyle":{
-                  "enumValues":{
-                     "values":[
-                        {
-                           "id":"rest"
-                        }
-                     ]
-                  }
-               }
+- ADDED -->    "targetUser":{
+|                "enumValues":{
+|                   "values":[
+|                      {
+|                        "id":"internal"
+|                      }
+|                  ]
+|                 }
+|              },
+|               "team":{
+|                  "enumValues":{
+|                     "values":[
+|                        {
+|                           "id":"testing"
+|                        }
+|                     ]
+|                  }
+|               },
+|               "businessUnit":{
+|                  "enumValues":{
+|                     "values":[
+|                        {
+|                           "id":"none"
+|                        }
+|                     ]
+|                  }
+|               },
+|               "maturityLevel":{
+|                  "enumValues":{
+|                     "values":[
+|                        {
+|                           "id":"level-1"
+|                        }
+|                     ]
+|                  }
+|               },
+|               "apiStyle":{
+|                  "enumValues":{
+|                     "values":[
+|                        {
+|                           "id":"rest"
+|                        }
+|                     ]
+|                  }
+| --->         }
             },
             "versions":[
                {
                   "version":{
                      "name":"projects/apigee.org/locations/europe-west1/apis/cl-AudienceAnalyse/versions/v1",
                      "displayName":"v1",
-                     "compliance":{
-                        "enumValues":{
-                           "values":[
-                              {
-                                 "id":"publicaopenadata"
-                              }
-                           ]
-                        }
-                     },
-                     "lifecycle":{
-                        "enumValues":{
-                           "values":[
-                              {
-                                 "id":"develop"
-                              }
-                           ]
-                        }
-                     }
+- ADDED -->          "compliance":{
+|                        "enumValues":{
+|                           "values":[
+|                              {
+|                                 "id":"publicaopenadata"
+|                              }
+|                           ]
+|                        }
+|                     },
+|                     "lifecycle":{
+|                        "enumValues":{
+|                           "values":[
+|                              {
+|                                 "id":"develop"
+|                              }
+|                           ]
+|                        }
+| --->              }
                   },
                   "deployments":[
                      {
