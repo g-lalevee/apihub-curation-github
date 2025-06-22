@@ -108,5 +108,27 @@ To associate your new curation:
 
 ## Test Integration
 
-To be able to test with the provided data
-10) Click Test integration. This runs the integration with input variable **apiData** default values and displays the execution result in the Test Integration dialog.
+To be able to test with the provided files (**ApiHub.cfg** and specification file **cl-AudienceAnalyse-v1.yaml**) and default value of **apiData** in Interation, you will need to configure API hub attributes.
+
+1) **ApiHub.cfg** contains:
+```sh
+api_targetUser="internal"
+api_team="testing"
+api_businessUnit="none"
+api_maturityLevel="level-1"
+api_apiStyle="rest"
+```
+
+Configure API hub system attributes with corresponding IDs (internal) and values:
+
+| System Attributes |  Resource |  Value   |    ID    | Description          |
+| ----------------- | --------- | -------- | -------- | -------------------- |
+| Target Users      |  API      | internal |          | Internal target user |
+| Team              |  API      | Testing  | testing  | Apigee Testing Team  |     
+| Business Unit     |  API      | None     | none     | None                 |
+| Maturity Level    |  API      | Level 1  | level 1  | Ressource            | 
+| API Style         |  API      | REST     |          | REST                 | 
+| Lifecycle         |  Version  | Develop  | develop  | Development          | 
+| Compliance        |  Version  | Public_Open_Data | publicaopenadata | Publicly available | 
+
+Check API hub documentation to undersand how you can update API hub system attributes using interface or API: [API  hub System Attributes](https://cloud.google.com/apigee/docs/apihub/manage-attributes#system-attributes)
