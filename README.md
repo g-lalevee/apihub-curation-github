@@ -106,29 +106,79 @@ To associate your new curation:
     * **Curation**: Select the curation you created in the steps above.
 
 
-## Test Integration
+---
+## Testing Your Integration
 
-To be able to test with the provided files (**ApiHub.cfg** and specification file **cl-AudienceAnalyse-v1.yaml**) and default value of **apiData** in Interation, you will need to configure API hub attributes.
+To effectively test this integration with the provided sample files (**ApiHub.cfg** and **cl-AudienceAnalyse-v1.yaml**), you'll need to configure specific API Hub attributes. These attributes are referenced by the integration's default `apiData` values.
 
-1) **ApiHub.cfg** contains:
-```sh
-api_targetUser="internal"
-api_team="testing"
-api_businessUnit="none"
-api_maturityLevel="level-1"
-api_apiStyle="rest"
-```
+Here's a breakdown of the attributes and their corresponding values:
 
-Configure API hub system attributes with corresponding IDs (internal) and values:
+* **`ApiHub.cfg`** contains:
 
-| System Attributes |  Resource |  Value   |    ID    | Description          |
-| ----------------- | --------- | -------- | -------- | -------------------- |
-| Target Users      |  API      | internal |          | Internal target user |
-| Team              |  API      | Testing  | testing  | Apigee Testing Team  |     
-| Business Unit     |  API      | None     | none     | None                 |
-| Maturity Level    |  API      | Level 1  | level 1  | Ressource            | 
-| API Style         |  API      | REST     |          | REST                 | 
-| Lifecycle         |  Version  | Develop  | develop  | Development          | 
-| Compliance        |  Version  | Public_Open_Data | publicaopenadata | Publicly available | 
+    ```sh
+    api_targetUser="internal"
+    api_team="testing"
+    api_businessUnit="none"
+    api_maturityLevel="level-1"
+    api_apiStyle="rest"
+    ```
 
-Check API hub documentation to undersand how you can update API hub system attributes using interface or API: [API  hub System Attributes](https://cloud.google.com/apigee/docs/apihub/manage-attributes#system-attributes)
+* **`cl-AudienceAnalyse-v1.yaml`** contains:
+
+    ```yaml
+    openapi: 3.0.0
+    info:
+      title: Contextual Analyzis API
+      description:...
+        . . .
+      x-data-classification: publicaopenadata
+
+    x-lifecycle: develop
+    ```
+
+You'll need to configure the following **API Hub system attributes** with their corresponding IDs and values:
+
+| System Attributes | Resource | Value          | ID               | Description            |
+| :---------------- | :------- | :------------- | :--------------- | :--------------------- |
+| Target Users      | API      | internal       |                  | Internal target user   |
+| Team              | API      | Testing        | testing          | Apigee Testing Team    |
+| Business Unit     | API      | None           | none             | None                   |
+| Maturity Level    | API      | Level 1        | level 1          | Resource               |
+| API Style         | API      | REST           |                  | REST                   |
+| Lifecycle         | Version  | Develop        | develop          | Development            |
+| Compliance        | Version  | Public\_Open\_Data | publicaopenadata | Publicly available data |
+
+For detailed instructions on how to update API Hub system attributes via the interface or API, refer to the [API Hub System Attributes documentation](https://cloud.google.com/apigee/docs/apihub/manage-attributes#system-attributes).
+
+---
+
+### Unit Test from Application Integration
+
+You can perform a quick unit test directly within Application Integration:
+
+1.  Open the `apiHubCurationGithub-v1` Integration in the Application Integration designer.
+2.  Ensure the Integration is deployed.
+3.  Click the **Test** button and validate the default values. This will run the integration and display the execution results in the "Test Integration" dialog.
+
+---
+
+### API Hub Plugin Manual Test
+
+> ⚠️ **Important Note on Running Curation:**
+>
+> When you run the Curation process from your API Hub, it will apply the curation logic to **ALL** your APIs, with slightly different behaviors depending on whether an API has a corresponding specification file in your GitHub repository:
+>
+> * **Renaming Only:** If an API **does not** have a corresponding API specification file in the GitHub repository, only the **renaming part** of the process will be applied.
+> * **All Steps Applied:** If an API **does** have a corresponding API specification file in the GitHub repository, **all defined curation steps** (including enrichment and renaming) will be applied.
+
+
+To see the curation in action within API Hub:
+
+1.  In the Google Cloud console, navigate to the API Hub interface.
+2.  In the left navigation menu, click **Settings**.
+3.  Select the **Plugins** sub-menu, then click the "3 dots" menu to the right of your configured plugin.
+4.  Select **Run**.
+5.  After a few minutes, click **APIs** in the left navigation menu.
+6.  Validate how your APIs have been imported and enriched based on the curation logic.
+    
+    
