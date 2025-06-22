@@ -1,4 +1,4 @@
-# Apigee API Hub: Curation process using Github repository
+# Apigee API Hub: API Curation Integration with Github repository
 
 [![PyPI status](https://img.shields.io/pypi/status/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/) 
 
