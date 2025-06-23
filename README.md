@@ -20,9 +20,12 @@ The curation logic implemented here performs the following steps for each ingest
     * If file **available**, it extracts:
         * **API Version Metadata** from the API specification file.
         * **API Metadata** from an API configuration file, using OpenAPI extensions.
+        > API Metadata and API Version Metadata are API hub System Attributes
 * **API Renaming:** The API's name is standardized by removing any versioning information (if present) to consolidate all versions under a single, consistent name.
 
-> API Metadata and API Version Metadata are API hub System Attributes
+![renaming](./images/renaming.png)
+
+Example: if we have 2 Apigee proxies named proxyName.v1 and proxyName.v2, we don't want to have two APIs in API hub (proxyName.v1 and proxyName.v2) but only ONE API (proxyName) with TWO versions (v1 and v2).
 
 ![integration process](./images/integration.png)
 
